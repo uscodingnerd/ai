@@ -1,0 +1,2 @@
+The goal of this project is to build an intelligent job referral system that automatically crawls internal job postings, uses a large language model to analyze and classify job content, and stores the results in a relational database. Users can interact with a Streamlit-based UI to receive personalized job recommendations through keyword search or semantic matching powered by LLM embeddings.
+<img width="8385" height="88" alt="image" src="https://github.com/user-attachments/assets/4876e74b-f08e-400a-b601-731ee370d2a6" />
