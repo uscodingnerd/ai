@@ -20,3 +20,9 @@ def recommend_jobs(query: str, k: int = 5):
     embeddings = OpenAIEmbeddings()
     faiss_index = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
     return faiss_index.similarity_search(query, k=k)
+
+
+def recommend_jobs_with_scores(query: str, k: int = 5):
+    embeddings = OpenAIEmbeddings()
+    faiss_index = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+    return faiss_index.similarity_search_with_score(query, k=k)
