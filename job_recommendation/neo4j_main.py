@@ -10,8 +10,9 @@ for job in jobs:
     try:
         script = gen_cypher(job)
         print(script)
-        # run_script(script)
+        run_script(script)
     except Exception as e:
         print(f"Failed to run script: {e}")
+
 
     i += 1
