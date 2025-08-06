@@ -41,8 +41,11 @@ if submit:
         # Step 2: Semantic search
         query_text = f"I have skills in {', '.join(user_skills)}. What jobs suit me?"
         st.write("🧠 Running semantic job ranking...")
+        neo4j_job_titles = matched_jobs
         results = recommend_jobs(query_text)
-        job_ids = [int(r.metadata["id"]) for r in results]
+        filtered_results = [r for r in results if r.metadata["title"] in neo4j_job_titles]
+        job_ids = [int(r.metadata["id"]) for r in filtered_results]
+        results = filtered_results
 
         # Step 3: Fetch job details from database
         jobs = session.query(JobPosting).filter(JobPosting.id.in_(job_ids)).all()
@@ -60,4 +63,5 @@ if submit:
                 st.markdown(f"**Location**: {job.location or 'Not specified'}")
                 st.markdown(f"**Level**: {job.level or 'Not specified'}")
                 st.markdown(f"**Required Skills**: {job.skills or 'N/A'}")
+
                 st.markdown(f"**Why This Job?**\n\n{result.page_content}")
