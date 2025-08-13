@@ -21,12 +21,12 @@ def fetch_jobs_by_skills(skills):
         result = session.run("""
         UNWIND $skills AS skillName
         MATCH (j:Job)-[:REQUIRES]->(s:Skill {name: skillName})
-        OPTIONAL MATCH (j)-[:WORKS_FOR]->(c:Company)
-        RETURN DISTINCT j.title AS job_title, j.id AS job_id, c.name AS company
+        RETURN DISTINCT j.title AS job_title, j.id AS job_id
         LIMIT 10
         """, skills=skills)
 
-        jobs = [record["job_title"] for record in result]
+        jobs = [record["job_id"] for record in result]
 
     driver.close()
     return jobs
+
