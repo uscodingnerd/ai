@@ -13,6 +13,7 @@ def gen_cypher(job):
 You are a Neo4j Cypher expert. Given the following job title and description, extract:
 Title: {job.title}
 Description: {job.description}
+Id: {job.id}
 
 Creates a Job node with title and id
 Links to a Company node
@@ -40,3 +41,4 @@ Remove the triple quote in the final result
 
     content = response.choices[0].message.content
     return content
+
