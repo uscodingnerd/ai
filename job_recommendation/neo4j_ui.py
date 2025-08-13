@@ -32,7 +32,7 @@ if submit:
 
     # Step 1: Neo4j filter (optional)
     st.write("🔗 Querying graph for skill-matched jobs...")
-    matched_jobs = fetch_jobs_by_skills(user_skills)
+    neo4j_job_ids = fetch_jobs_by_skills(user_skills)
     if not matched_jobs:
         st.warning("No matching jobs found in graph.")
     else:
@@ -41,9 +41,9 @@ if submit:
         # Step 2: Semantic search
         query_text = f"I have skills in {', '.join(user_skills)}. What jobs suit me?"
         st.write("🧠 Running semantic job ranking...")
-        neo4j_job_titles = matched_jobs
         results = recommend_jobs(query_text)
-        filtered_results = [r for r in results if r.metadata["title"] in neo4j_job_titles]
+        st.write(f"Found {len(results)} llm-matching jobs.")
+        filtered_results = [r for r in results if int(r.metadata["id"]) in neo4j_job_ids]
         job_ids = [int(r.metadata["id"]) for r in filtered_results]
         results = filtered_results
 
@@ -65,3 +65,4 @@ if submit:
                 st.markdown(f"**Required Skills**: {job.skills or 'N/A'}")
 
                 st.markdown(f"**Why This Job?**\n\n{result.page_content}")
+
