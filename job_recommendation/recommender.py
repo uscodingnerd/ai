@@ -1,4 +1,4 @@
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from database import SessionLocal
 from models import JobPosting
@@ -18,6 +18,7 @@ def build_vector_index():
 
 def recommend_jobs(query: str, k: int = 5):
     embeddings = OpenAIEmbeddings()
+    # explicitly allows deserialization of untrusted or potentially dangerous input
     faiss_index = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
     return faiss_index.similarity_search(query, k=k)
 
